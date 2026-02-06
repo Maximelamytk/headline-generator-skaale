@@ -54,11 +54,28 @@ exports.handler = async (event) => {
       };
     }
 
-    // Call Scrapin.io API
-    const endpoint = `https://api.scrapin.io/enrichment/profile?apikey=${SCRAPIN_API_KEY}&linkedinUrl=${encodeURIComponent(linkedinUrl)}`;
+    // Call Scrapin.io API (v1 endpoint with linkedInUrl parameter)
+    const endpoint = `https://api.scrapin.io/v1/enrichment/profile?apikey=${SCRAPIN_API_KEY}&linkedInUrl=${encodeURIComponent(linkedinUrl)}`;
+
+    console.log('Calling Scrapin API for:', linkedinUrl);
 
     const response = await fetch(endpoint);
-    const data = await response.json();
+    const responseText = await response.text();
+
+    console.log('Scrapin response status:', response.status);
+    console.log('Scrapin response:', responseText);
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      console.error('Failed to parse Scrapin response:', responseText);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Invalid response from Scrapin API' })
+      };
+    }
 
     if (!response.ok) {
       console.error('Scrapin API error:', response.status, data);
@@ -66,17 +83,18 @@ exports.handler = async (event) => {
         statusCode: response.status,
         headers,
         body: JSON.stringify({
-          error: data.message || 'Failed to fetch profile',
+          error: data.message || data.error || 'Failed to fetch profile',
           code: response.status
         })
       };
     }
 
     if (!data.success || !data.person) {
+      console.error('Scrapin returned no person:', data);
       return {
         statusCode: 404,
         headers,
-        body: JSON.stringify({ error: 'Profile not found' })
+        body: JSON.stringify({ error: 'Profile not found', details: data })
       };
     }
 
