@@ -157,8 +157,8 @@ body {
   align-items: center;
   gap: 10px;
   background: transparent;
-  border: 1px solid #0077b5;
-  color: #0077b5;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   padding: 12px 24px;
   border-radius: 100px;
   font-size: 14px;
@@ -168,7 +168,7 @@ body {
 }
 
 .btn-linkedin-creator:hover {
-  background: #0077b5;
+  background: var(--accent);
   color: white;
 }
 
@@ -435,13 +435,20 @@ body {
   margin-top: 16px;
   padding-top: 24px;
   border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.optional-section .form-group {
+  margin: 0;
 }
 
 .optional-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 4px;
 }
 
 .optional-badge {
@@ -466,26 +473,21 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  background: linear-gradient(135deg, var(--accent) 0%, #e67a32 100%);
+  gap: 10px;
+  background: linear-gradient(135deg, var(--accent) 0%, #e07030 100%);
   color: white;
   border: none;
-  padding: 20px 36px;
-  font-size: 17px;
-  font-weight: 700;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
   font-family: inherit;
-  border-radius: 100px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow:
-    0 4px 15px rgba(247, 136, 62, 0.4),
-    0 0 0 0 rgba(247, 136, 62, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(247, 136, 62, 0.35);
   margin-top: 8px;
   width: 100%;
   overflow: hidden;
-  text-transform: none;
-  letter-spacing: 0.3px;
 }
 
 .btn-primary::before {
@@ -498,7 +500,7 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.15),
     transparent
   );
   transition: left 0.5s ease;
@@ -510,15 +512,12 @@ body {
 
 .btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #ff9a52 0%, var(--accent) 100%);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow:
-    0 8px 25px rgba(247, 136, 62, 0.5),
-    0 0 0 4px rgba(247, 136, 62, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(247, 136, 62, 0.45);
 }
 
 .btn-primary:active {
-  transform: translateY(-1px) scale(1.01);
+  transform: translateY(0);
 }
 
 .btn-primary:disabled {
@@ -528,28 +527,21 @@ body {
 }
 
 .btn-primary.large {
-  padding: 22px 48px;
-  font-size: 19px;
+  padding: 18px 40px;
+  font-size: 17px;
 }
 
 .btn-emoji {
-  font-size: 22px;
-  animation: bounce-emoji 2s ease-in-out infinite;
-}
-
-@keyframes bounce-emoji {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-3px) rotate(-5deg); }
-  75% { transform: translateY(-3px) rotate(5deg); }
+  font-size: 18px;
 }
 
 .btn-arrow {
-  font-size: 22px;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 18px;
+  transition: transform 0.3s ease;
 }
 
 .btn-primary:hover .btn-arrow {
-  transform: translateX(6px);
+  transform: translateX(4px);
 }
 
 .btn-secondary {
@@ -872,10 +864,11 @@ body {
 }
 
 .profile-banner {
-  height: 120px;
+  height: 160px;
   background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
-  background-size: cover;
+  background-size: 100% auto;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 .profile-main {
@@ -1279,8 +1272,8 @@ body {
 
 .team-photo {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .team-info {

@@ -323,53 +323,53 @@ async function typeWriter(element, text, speed = 30) {
 async function runInterviewSequence(prenom) {
   let progress = 0;
   const startTime = Date.now();
-  const minDuration = 8000; // Minimum 8 seconds
+  const minDuration = 5000; // Minimum 5 seconds
 
-  // Progress bar animation
+  // Progress bar animation (faster)
   const progressInterval = setInterval(() => {
     if (progress < 95) {
-      progress += Math.random() * 2;
+      progress += Math.random() * 4;
       progressFill.style.width = `${Math.min(progress, 95)}%`;
     }
-  }, 100);
+  }, 80);
 
-  // Phase 1: Intro
+  // Phase 1: Intro (faster)
   for (const msg of introMessages) {
     typingIndicator.classList.remove('hidden');
-    await sleep(600);
+    await sleep(400);
     typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, msg.replace('{prenom}', prenom), 25);
-    await sleep(1200);
+    await typeWriter(questionText, msg.replace('{prenom}', prenom), 20);
+    await sleep(800);
   }
 
-  // Phase 2: Questions (shuffle and pick 4-5)
+  // Phase 2: Questions (pick 3 only)
   const shuffled = [...interviewQuestions].sort(() => Math.random() - 0.5);
-  const selectedQuestions = shuffled.slice(0, 5);
+  const selectedQuestions = shuffled.slice(0, 3);
 
   for (const question of selectedQuestions) {
     typingIndicator.classList.remove('hidden');
-    await sleep(800);
+    await sleep(500);
     typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, question, 25);
-    await sleep(2500);
+    await typeWriter(questionText, question, 20);
+    await sleep(1500);
 
     // Random glitch easter egg (10% chance)
     if (Math.random() < 0.1) {
       questionText.classList.add('glitch');
-      await sleep(300);
+      await sleep(200);
       questionText.classList.remove('glitch');
     }
   }
 
-  // Phase 3: Final messages
+  // Phase 3: Final messages (fewer, faster)
   progressText.textContent = 'Finalisation...';
 
-  for (const msg of finalMessages.slice(0, -1)) {
+  for (const msg of finalMessages.slice(0, 3)) {
     typingIndicator.classList.remove('hidden');
-    await sleep(400);
+    await sleep(300);
     typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, msg, 20);
-    await sleep(1000);
+    await typeWriter(questionText, msg, 15);
+    await sleep(600);
   }
 
   // Ensure minimum duration
