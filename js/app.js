@@ -8,10 +8,7 @@ const state = {
   formData: {},
   profileData: null,
   currentHeadline: null,
-  translations: [],
-  cringeLevel: 3,
-  regenerationCount: 0,
-  maxRegenerations: 5
+  translations: []
 };
 
 // DOM Elements
@@ -48,12 +45,9 @@ const profileName = document.getElementById('profile-name');
 const profileHeadline = document.getElementById('profile-headline');
 const profileLocation = document.getElementById('profile-location');
 const translationsContainer = document.getElementById('translations');
-const btnWorse = document.getElementById('btn-worse');
-const regenerationCount = document.getElementById('regeneration-count');
 const btnShareLinkedin = document.getElementById('btn-share-linkedin');
 const btnCopy = document.getElementById('btn-copy');
 const btnNext = document.getElementById('btn-next');
-const cringeLevels = document.querySelectorAll('.cringe-level');
 
 // Modal elements
 const errorModal = document.getElementById('error-modal');
@@ -433,7 +427,7 @@ async function generateHeadline(profileData, formData, level) {
 // ===========================================
 
 function displayResult() {
-  const { profileData, currentHeadline, translations, cringeLevel } = state;
+  const { profileData, currentHeadline, translations } = state;
   const { prenom, nom } = state.formData;
 
   // Profile card
@@ -467,28 +461,7 @@ function displayResult() {
     </div>
   `).join('');
 
-  // Cringe level
-  cringeLevels.forEach(btn => {
-    const level = parseInt(btn.dataset.level);
-    btn.classList.toggle('active', level === cringeLevel);
-  });
-
-  // Regeneration count
-  updateRegenerationCount();
-
   showPage('result');
-}
-
-function updateRegenerationCount() {
-  const remaining = state.maxRegenerations - state.regenerationCount;
-
-  if (remaining > 0) {
-    regenerationCount.textContent = `${remaining} régénération${remaining > 1 ? 's' : ''} restante${remaining > 1 ? 's' : ''}`;
-    btnWorse.disabled = false;
-  } else {
-    regenerationCount.textContent = "T'en as assez eu pour aujourd'hui 😅 — Partage ton résultat !";
-    btnWorse.disabled = true;
-  }
 }
 
 // ===========================================
@@ -513,7 +486,9 @@ form.addEventListener('submit', async (e) => {
     linkedin: linkedinUrl,
     passion: document.getElementById('passion').value.trim(),
     trucPasAssume: document.getElementById('truc-pas-assume').value.trim(),
-    fierte: document.getElementById('fierte').value.trim()
+    fierte: document.getElementById('fierte').value.trim(),
+    buzzword: document.getElementById('buzzword').value.trim(),
+    situation: document.getElementById('situation').value.trim()
   };
 
   // Disable button
@@ -551,11 +526,11 @@ form.addEventListener('submit', async (e) => {
       currentPosition: person.positions?.positionHistory?.[0]
     };
 
-    // Generate headline
+    // Generate headline (max cringe level 5)
     const headlineResult = await generateHeadline(
       state.profileData,
       state.formData,
-      state.cringeLevel
+      5
     );
 
     state.currentHeadline = headlineResult.headline;
@@ -578,71 +553,6 @@ form.addEventListener('submit', async (e) => {
 btnRetry.addEventListener('click', () => {
   hideError();
   showPage('form');
-});
-
-// Regenerate button
-btnWorse.addEventListener('click', async () => {
-  if (state.regenerationCount >= state.maxRegenerations) return;
-
-  state.regenerationCount++;
-  state.cringeLevel = Math.min(state.cringeLevel + 1, 5);
-
-  btnWorse.disabled = true;
-  btnWorse.querySelector('span').textContent = 'Génération...';
-
-  try {
-    const headlineResult = await generateHeadline(
-      state.profileData,
-      state.formData,
-      state.cringeLevel
-    );
-
-    state.currentHeadline = headlineResult.headline;
-    state.translations = headlineResult.traductions || [];
-
-    displayResult();
-
-  } catch (error) {
-    console.error('Regeneration error:', error);
-    showError('default', state.formData.prenom);
-  } finally {
-    btnWorse.querySelector('span').textContent = 'Encore pire';
-    updateRegenerationCount();
-  }
-});
-
-// Cringe level buttons
-cringeLevels.forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const level = parseInt(btn.dataset.level);
-    if (level === state.cringeLevel) return;
-    if (state.regenerationCount >= state.maxRegenerations) return;
-
-    state.regenerationCount++;
-    state.cringeLevel = level;
-
-    btnWorse.disabled = true;
-    btnWorse.querySelector('span').textContent = 'Génération...';
-
-    try {
-      const headlineResult = await generateHeadline(
-        state.profileData,
-        state.formData,
-        state.cringeLevel
-      );
-
-      state.currentHeadline = headlineResult.headline;
-      state.translations = headlineResult.traductions || [];
-
-      displayResult();
-
-    } catch (error) {
-      console.error('Level change error:', error);
-    } finally {
-      btnWorse.querySelector('span').textContent = 'Encore pire';
-      updateRegenerationCount();
-    }
-  });
 });
 
 // Share on LinkedIn

@@ -432,23 +432,22 @@ body {
 
 /* Optional Section */
 .optional-section {
-  margin-top: 16px;
+  margin-top: 24px;
   padding-top: 24px;
   border-top: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.optional-section .form-group {
-  margin: 0;
 }
 
 .optional-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 4px;
+  margin-bottom: 16px;
+}
+
+.optional-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .optional-badge {

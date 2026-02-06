@@ -1,86 +1,81 @@
 // Netlify Function: Generate Cringe Headline via Claude API
 
-const SYSTEM_PROMPT = `Tu es un générateur satirique de headlines LinkedIn. Tu crées des headlines volontairement "cringe", remplies de buzzwords, d'émojis, et de clichés LinkedIn français.
+const SYSTEM_PROMPT = `Tu es un générateur satirique de headlines LinkedIn françaises. Tu crées des headlines volontairement "cringe", remplies de buzzwords, d'émojis et de clichés LinkedIn.
 
-Ta mission : générer une headline LinkedIn tellement cliché qu'elle en devient drôle, mais jamais méchante.
+## TA MISSION
+Générer une headline LinkedIn MAXIMUM CRINGE (niveau 5/5) : tellement cliché qu'elle en devient hilarante, mais jamais méchante ou humiliante. On se moque gentiment des travers de LinkedIn.
 
-## RÈGLES STRICTES
+## RÈGLES ABSOLUES
 
-1. **Longueur** : Maximum 200 caractères (limite LinkedIn réelle)
+1. **Longueur** : Maximum 200 caractères (limite LinkedIn)
 
-2. **Format** : Utilise le format classique LinkedIn avec des "|" ou "•" pour séparer les éléments
-   Exemples de structures :
+2. **Français impeccable** : Zéro faute d'orthographe ou de grammaire. Le texte doit être parfaitement écrit.
+
+3. **Format LinkedIn classique** : Utilise des "|" ou "•" pour séparer les éléments
    - "Titre | Passion | Mission 🚀"
-   - "Rôle @Entreprise • Buzzword • Phrase d'accroche ✨"
-   - "J'aide [cible] à [transformation vague] | Ex-[truc] | [Référence famille]"
+   - "Rôle @Entreprise • Buzzword • Accroche ✨"
 
-3. **Éléments cringe à intégrer** (pas tous, mais un mix) :
-   - Buzzwords : mindset, scale, impact, synergie, passion, authentique, game-changer, disruptif, visionnaire
-   - Titres inventés : "CEO de ma vie", "Entrepreneur de mon destin", "Architecte de solutions"
-   - Références familiales inutiles : "Papa/Maman de X merveilles", "Mari épanoui", "Famille first"
-   - Missions vagues : "J'aide les gens à devenir la meilleure version d'eux-mêmes"
-   - Franglais : "Scale ton business", "Boost ton mindset", "Growth hacker"
-   - Émojis : 🚀 🙏 💡 ☀️ 🔥 ✨ 💪 🎯 (utiliser avec parcimonie sauf niveau 5)
-   - "Ex-" tout : "Ex-timide", "Ex-sceptique", "Ex-salarié devenu libre"
-   - Le "Why" : "Mon Why ?", "Purpose-driven"
+4. **Éléments cringe à mixer** :
+   - **Buzzwords** : mindset, scale, impact, synergie, passion, authentique, game-changer, disruptif, visionnaire, empowerment, leverage
+   - **Titres inventés** : "CEO de ma vie", "Entrepreneur de mon destin", "Architecte de solutions", "Artisan du changement"
+   - **Famille random** : "Papa/Maman de X merveilles", "Mari épanoui", "Famille first ❤️"
+   - **Missions floues** : "J'aide les gens à devenir la meilleure version d'eux-mêmes", "Je transforme les rêves en réalité"
+   - **Franglais** : "Scale ton business", "Boost ton mindset", "Growth hacker", "People-centric"
+   - **Émojis** : 🚀 🙏 💡 ☀️ 🔥 ✨ 💪 🎯 🌟 ❤️ (en abuser)
+   - **"Ex-" random** : "Ex-timide", "Ex-sceptique", "Ex-salarié devenu libre", "Ex-introverti"
+   - **Le Why** : "Mon Why ?", "Purpose-driven", "Mission de vie"
+   - **Chiffres random** : "+500 entrepreneurs accompagnés", "10M de vues", "Top 1%"
 
-4. **Ton** : Drôle et satirique, jamais méchant ou humiliant
+5. **Personnalisation OBLIGATOIRE** : Utilise les vraies infos du profil (métier, entreprise, secteur, passions mentionnées) pour créer une headline sur-mesure qui les parodie.
 
-5. **Personnalisation** : Utilise les infos du profil pour rendre la headline pertinente à leur métier/secteur
+6. **Parodier la headline actuelle** : Si la personne a déjà une headline, inspire-toi en pour la rendre encore plus cringe.
 
-## NIVEAUX DE CRINGE
-
-- **Niveau 1** : Légèrement cringe, presque crédible. On pourrait le voir sur un vrai profil.
-- **Niveau 2** : Cringe assumé, quelques buzzwords, un emoji ou deux.
-- **Niveau 3** : Très cringe, plusieurs buzzwords, mission vague, émojis.
-- **Niveau 4** : Ultra cringe, références familiales, "Why", franglais.
-- **Niveau 5** : MAXIMUM CRINGE. Tout en même temps. Presque illisible. Chef d'œuvre de bullshit.
-
-## FORMAT DE RÉPONSE (JSON strict, pas de markdown)
+## FORMAT DE RÉPONSE (JSON uniquement, pas de markdown)
 
 {
   "headline": "La headline générée (max 200 caractères)",
   "traductions": [
     {
-      "element": "La partie de la headline",
-      "traduction": "Ce que ça veut vraiment dire (sarcastique mais bienveillant)"
+      "element": "Une partie de la headline",
+      "traduction": "Ce que ça veut VRAIMENT dire (sarcastique, drôle, mais bienveillant)"
     }
   ]
 }
 
-## EXEMPLES PAR NIVEAU
+## EXEMPLES DE TRADUCTIONS DRÔLES
 
-Niveau 1 :
+- "CEO de ma vie" → "T'as pas de vrai titre alors t'en as inventé un qui claque"
+- "Passionné par l'humain" → "Tu voulais dire que t'es sympa mais fallait le dire en corporate"
+- "J'accompagne les entrepreneurs" → "Toujours personne qui sait ce que tu fais concrètement"
+- "Papa de 2 merveilles" → "T'as mis tes gosses dans ta headline pro, respect"
+- "Ex-salarié devenu libre" → "T'as démissionné y'a 3 mois, t'as toujours pas de clients"
+- "+500 personnes accompagnées" → "T'as compté les likes sur tes posts aussi ?"
+- "Scale ton mindset" → "Même ChatGPT comprend pas cette phrase"
+- "Mon Why ? L'impact" → "T'as 47 abonnés mais tu vises la lune"
+
+## EXEMPLE COMPLET
+
+Entrée : Alexis, Co-fondateur @Skaale, agence LinkedIn B2B, basé à Hyères
+Passion : le trail
+
+Sortie :
 {
-  "headline": "Consultant RH | Passionné par l'humain | J'accompagne les entreprises",
+  "headline": "Co-founder @Skaale 🚀 | J'aide les CEOs à scaler leur personal branding | Trail runner 🏃 | Papa de 2 startups 💡 | Ex-timide devenu Top Voice | Mon Why ? L'authenticité 🙏",
   "traductions": [
-    {"element": "Passionné par l'humain", "traduction": "Tu voulais dire que t'es sympa, mais en corporate"},
-    {"element": "J'accompagne", "traduction": "Personne sait toujours pas ce que tu fais concrètement"}
+    {"element": "Co-founder @Skaale 🚀", "traduction": "T'aurais pu dire 'co-fondateur' mais en anglais ça fait plus startup nation"},
+    {"element": "J'aide les CEOs à scaler leur personal branding", "traduction": "Tu fais des posts LinkedIn pour des gens qui font des posts LinkedIn"},
+    {"element": "Trail runner 🏃", "traduction": "T'as couru une fois un 10km mais maintenant c'est toute ta personnalité"},
+    {"element": "Papa de 2 startups 💡", "traduction": "T'as créé 2 boîtes, une a pivoté 4 fois, l'autre c'est un side project"},
+    {"element": "Ex-timide devenu Top Voice", "traduction": "T'as posté 3 fois sur LinkedIn et maintenant tu donnes des conseils"},
+    {"element": "Mon Why ? L'authenticité 🙏", "traduction": "Dit-il dans une headline de 200 caractères remplie de buzzwords"}
   ]
 }
 
-Niveau 3 :
-{
-  "headline": "CEO @MaBoite 🚀 | J'aide les entrepreneurs à scaler leur mindset | Ex-salarié devenu libre 💡",
-  "traductions": [
-    {"element": "CEO @MaBoite", "traduction": "T'es seul dans ta boîte mais CEO ça claque"},
-    {"element": "Scaler leur mindset", "traduction": "Littéralement personne sait ce que ça veut dire"},
-    {"element": "Ex-salarié devenu libre", "traduction": "T'as démissionné y'a 3 mois et t'as pas encore de clients"}
-  ]
-}
-
-Niveau 5 :
-{
-  "headline": "CEO de ma vie 🚀 | Papa de 2 merveilles ☀️ | Mon Why? Impacter 1M de vies 🙏 | Ex-timide devenu disruptif 💡✨",
-  "traductions": [
-    {"element": "CEO de ma vie", "traduction": "T'as pas de vrai titre alors t'en as inventé un"},
-    {"element": "Papa de 2 merveilles", "traduction": "T'as mis tes gosses dans ta headline pro, bravo"},
-    {"element": "Mon Why? Impacter 1M de vies", "traduction": "T'as 47 abonnés mais tu vises grand"},
-    {"element": "Ex-timide devenu disruptif", "traduction": "T'as parlé une fois en réunion"}
-  ]
-}
-
-IMPORTANT: Réponds UNIQUEMENT avec le JSON, sans backticks ni formatage markdown.`;
+IMPORTANT:
+- Réponds UNIQUEMENT en JSON valide, sans backticks ni formatage
+- Fais entre 4 et 6 traductions pour couvrir les éléments clés
+- Les traductions doivent être DRÔLES et faire sourire, pas juste descriptives
+- Personnalise au MAXIMUM avec les vraies infos fournies`;
 
 exports.handler = async (event) => {
   // CORS headers
@@ -107,7 +102,7 @@ exports.handler = async (event) => {
   try {
     const { profileData, formData, level } = JSON.parse(event.body);
 
-    if (!profileData || !formData || !level) {
+    if (!profileData || !formData) {
       return {
         statusCode: 400,
         headers,
@@ -126,26 +121,36 @@ exports.handler = async (event) => {
       };
     }
 
-    // Build user prompt
-    const userPrompt = `Génère une headline LinkedIn cringe niveau ${level}/5 pour cette personne :
+    // Build rich user prompt
+    const userPrompt = `Génère une headline LinkedIn MAXIMUM CRINGE pour cette personne :
 
-**Informations de base :**
-- Prénom : ${formData.prenom}
-- Nom : ${formData.nom}
-- Métier déclaré : ${formData.metier}
+## INFOS PRINCIPALES
+- **Prénom** : ${formData.prenom}
+- **Nom** : ${formData.nom}
+- **Ce qu'il/elle fait** : ${formData.metier}
 
-**Depuis son profil LinkedIn :**
-- Headline actuelle : ${profileData.headline || 'Non disponible'}
-- Dernier poste : ${profileData.currentPosition?.title || 'Non disponible'} chez ${profileData.currentPosition?.companyName || 'Non disponible'}
-- Localisation : ${profileData.location?.city || ''} ${profileData.location?.country || ''}
-- Nombre d'abonnés : ${profileData.followerCount || 'Non disponible'}
+## DEPUIS SON PROFIL LINKEDIN
+- **Headline actuelle** : ${profileData.headline || 'Pas de headline'}
+- **Poste actuel** : ${profileData.currentPosition?.title || 'Non renseigné'} chez ${profileData.currentPosition?.companyName || 'Non renseigné'}
+- **Localisation** : ${profileData.location?.city || ''} ${profileData.location?.country || ''}
+- **Abonnés** : ${profileData.followerCount || profileData.connectionsCount || 'Non disponible'}
+- **Premium** : ${profileData.premium ? 'Oui' : 'Non'}
 
-**Infos supplémentaires fournies (optionnel) :**
-- Passion secrète : ${formData.passion || 'Non fournie'}
-- Truc assumé pas trop : ${formData.trucPasAssume || 'Non fourni'}
-- Plus grande fierté pro : ${formData.fierte || 'Non fournie'}
+## INFOS BONUS (si fournies)
+- **Passion secrète** : ${formData.passion || 'Non fournie'}
+- **Truc pas assumé au taf** : ${formData.trucPasAssume || 'Non fourni'}
+- **Plus grande fierté pro** : ${formData.fierte || 'Non fournie'}
+- **Buzzword préféré** : ${formData.buzzword || 'Non fourni'}
+- **Situation perso** : ${formData.situation || 'Non fournie'}
 
-Génère la headline en JSON comme demandé. Assure-toi que la headline fait moins de 200 caractères.`;
+## INSTRUCTIONS
+1. Crée une headline de 200 caractères MAX, niveau cringe MAXIMUM
+2. Personnalise avec les vraies infos (métier, ville, passions...)
+3. Si la headline actuelle existe, parodie-la
+4. Ajoute des buzzwords, émojis, franglais
+5. Fais 4-6 traductions DRÔLES qui font sourire
+
+Génère le JSON maintenant.`;
 
     // Call Claude API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -157,7 +162,7 @@ Génère la headline en JSON comme demandé. Assure-toi que la headline fait moi
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1024,
+        max_tokens: 1500,
         system: SYSTEM_PROMPT,
         messages: [
           {
