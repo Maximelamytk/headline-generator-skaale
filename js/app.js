@@ -125,19 +125,21 @@ const errorMessages = {
 // ===========================================
 
 const fakeHeadlines = [
-  "CEO de ma vie 🚀 | Passionné par l'humain",
-  "J'aide les entrepreneurs à scaler leur mindset 💡",
-  "Ex-salarié devenu libre | Papa de 2 merveilles ☀️",
-  "Mon Why ? Impacter 1M de vies 🙏",
-  "Growth Hacker | Disrupteur | Visionnaire",
-  "Architecte de solutions | Game-changer",
-  "Je transforme les rêves en réalité ✨",
-  "Entrepreneur de mon destin | Mindset first",
-  "Passionné par la synergie et l'impact 🔥",
-  "Ex-timide devenu speaker TEDx",
-  "J'accompagne les leaders de demain",
-  "Scale ton business avec moi 🚀",
-  "Authentic | Purpose-driven | Blessed",
+  "CEO de ma vie 🚀 | Papa de 3 startups et 2 échecs 💀",
+  "Ex-timide devenu mass-posteur LinkedIn | Mon Why ? Ton feed 🙏",
+  "J'ai quitté mon CDI pour poster des citations sur LinkedIn ✨",
+  "Serial entrepreneur (de side projects jamais finis) 🔥",
+  "Je scale ton mindset pendant que tu scroll 💡",
+  "TOP VOICE auto-proclamé | 47 abonnés mais je vise les 1M 🎯",
+  "Passionné par l'humain (surtout ceux qui likent mes posts) ❤️",
+  "Ex-salarié devenu libre (de revenus aussi) ☀️",
+  "J'accompagne les gens à devenir la meilleure version de moi-même 🙏",
+  "Disrupteur de machine à café | Visionnaire de l'open space 🚀",
+  "Papa de 2 merveilles + 1 side project qui pivote 💡",
+  "Mon Why ? J'ai vu une vidéo TED une fois ✨",
+  "Growth Hacker (j'ai installé Google Analytics) 📈",
+  "Je transforme les réunions en emails (et inversement) 🔄",
+  "Entrepreneur de mon destin | Freelance de ma galère 💪",
 ];
 
 let taglineAnimationRunning = true;
