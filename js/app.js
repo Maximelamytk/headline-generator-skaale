@@ -60,6 +60,7 @@ const errorModal = document.getElementById('error-modal');
 const errorTitle = document.getElementById('error-title');
 const errorSubtitle = document.getElementById('error-subtitle');
 const btnRetry = document.getElementById('btn-retry');
+const btnModalClose = document.getElementById('btn-modal-close');
 
 // ===========================================
 // INTERVIEW QUESTIONS
@@ -678,6 +679,12 @@ errorModal.addEventListener('click', (e) => {
     hideError();
     showPage('form');
   }
+});
+
+// Close modal button
+btnModalClose.addEventListener('click', () => {
+  hideError();
+  showPage('form');
 });
 
 // ===========================================
