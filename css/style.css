@@ -90,7 +90,140 @@ body {
 }
 
 /* ===========================================
-   PAGE 1: FORM / HERO
+   HEADER WITH BACK BUTTON
+   =========================================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-back:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===========================================
+   PAGE 0: HOMEPAGE
+   =========================================== */
+
+.hero-home {
+  background: radial-gradient(ellipse at center top, rgba(247, 136, 62, 0.08) 0%, transparent 50%);
+}
+
+.title-large {
+  font-size: clamp(40px, 8vw, 72px);
+  margin-bottom: 32px;
+  letter-spacing: -0.03em;
+}
+
+.tagline-container {
+  margin-bottom: 32px;
+}
+
+.tagline-static {
+  display: block;
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tagline-animated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tagline-text {
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--accent);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.tagline-cursor {
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--accent);
+  font-weight: 300;
+  margin-left: 2px;
+  animation: blink-cursor 0.8s steps(2) infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.subtitle-home {
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: var(--text-secondary);
+}
+
+.subtitle-home strong {
+  color: var(--text-primary);
+}
+
+.btn-large {
+  padding: 22px 48px;
+  font-size: 20px;
+}
+
+/* ===========================================
+   PAGE 1: FORM
+   =========================================== */
+
+.form-header {
+  margin-bottom: 32px;
+}
+
+.step-indicator {
+  display: inline-block;
+  background: var(--bg-card);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.form-title {
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-subtitle {
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+/* ===========================================
+   PAGE 1: FORM / HERO (continued)
    =========================================== */
 
 .hero {

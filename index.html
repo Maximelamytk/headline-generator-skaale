@@ -23,24 +23,57 @@
   <link rel="icon" type="image/png" href="assets/logo-skaale/Frame 24.png">
 </head>
 <body>
-  <!-- PAGE 1: ACCUEIL + FORMULAIRE -->
-  <section id="page-form" class="page active">
+  <!-- PAGE 0: HOMEPAGE -->
+  <section id="page-home" class="page active">
     <header class="header">
       <a href="https://skaale.fr" target="_blank" class="logo-link">
         <img src="assets/logo-skaale/Frame 24-1.png" alt="Skaale" class="logo">
       </a>
     </header>
 
-    <main class="hero">
+    <main class="hero hero-home">
       <div class="hero-content">
         <div class="badge">
           <img src="assets/logo-skaale/icon star.png" alt="" class="badge-icon">
           <span>100% Garanti Insupportable</span>
         </div>
 
-        <h1 class="title">Le Générateur de<br><span class="highlight">Headline LinkedIn Pétée</span></h1>
+        <h1 class="title title-large">LE GÉNÉRATEUR DE<br><span class="highlight">HEADLINE PÉTÉE</span></h1>
 
-        <p class="subtitle">Entre ton profil, on te génère la headline la plus cringe de LinkedIn.<br>Tu vas adorer la détester.</p>
+        <div class="tagline-container">
+          <span class="tagline-static">Ta future headline :</span>
+          <div class="tagline-animated">
+            <span class="tagline-text" id="tagline-text"></span>
+            <span class="tagline-cursor">|</span>
+          </div>
+        </div>
+
+        <p class="subtitle subtitle-home">Entre ton profil LinkedIn, on te génère la headline<br>la plus cringe du game. <strong>Attention, ça pique.</strong></p>
+
+        <button class="btn-primary btn-large" id="btn-start">
+          <span>Générer ma headline</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </main>
+  </section>
+
+  <!-- PAGE 1: FORMULAIRE -->
+  <section id="page-form" class="page">
+    <header class="header">
+      <a href="https://skaale.fr" target="_blank" class="logo-link">
+        <img src="assets/logo-skaale/Frame 24-1.png" alt="Skaale" class="logo">
+      </a>
+      <button class="btn-back" id="btn-back-home">← Retour</button>
+    </header>
+
+    <main class="hero">
+      <div class="hero-content">
+        <div class="form-header">
+          <span class="step-indicator">ÉTAPE 1/2</span>
+          <h2 class="form-title">Dis-nous en plus sur toi</h2>
+          <p class="form-subtitle">On a besoin de quelques infos pour créer ta headline de rêve</p>
+        </div>
 
         <form id="headline-form" class="form">
           <div class="form-group">

@@ -16,11 +16,17 @@ const state = {
 
 // DOM Elements
 const pages = {
+  home: document.getElementById('page-home'),
   form: document.getElementById('page-form'),
   interview: document.getElementById('page-interview'),
   result: document.getElementById('page-result'),
   offers: document.getElementById('page-offers')
 };
+
+// Homepage elements
+const btnStart = document.getElementById('btn-start');
+const btnBackHome = document.getElementById('btn-back-home');
+const taglineText = document.getElementById('tagline-text');
 
 const form = document.getElementById('headline-form');
 const linkedinInput = document.getElementById('linkedin');
@@ -118,6 +124,62 @@ const errorMessages = {
     subtitle: "Tu veux bien relancer ?"
   }
 };
+
+// ===========================================
+// HOMEPAGE TAGLINES
+// ===========================================
+
+const fakeHeadlines = [
+  "CEO de ma vie 🚀 | Passionné par l'humain",
+  "J'aide les entrepreneurs à scaler leur mindset 💡",
+  "Ex-salarié devenu libre | Papa de 2 merveilles ☀️",
+  "Mon Why ? Impacter 1M de vies 🙏",
+  "Growth Hacker | Disrupteur | Visionnaire",
+  "Architecte de solutions | Game-changer",
+  "Je transforme les rêves en réalité ✨",
+  "Entrepreneur de mon destin | Mindset first",
+  "Passionné par la synergie et l'impact 🔥",
+  "Ex-timide devenu speaker TEDx",
+  "J'accompagne les leaders de demain",
+  "Scale ton business avec moi 🚀",
+  "Authentic | Purpose-driven | Blessed",
+];
+
+let taglineAnimationRunning = true;
+
+async function animateTaglines() {
+  let index = 0;
+
+  while (taglineAnimationRunning) {
+    const headline = fakeHeadlines[index];
+
+    // Clear current text
+    taglineText.textContent = '';
+
+    // Type the headline
+    for (let i = 0; i < headline.length; i++) {
+      if (!taglineAnimationRunning) break;
+      taglineText.textContent += headline.charAt(i);
+      await sleep(40);
+    }
+
+    // Wait before erasing
+    await sleep(2000);
+
+    // Erase the headline
+    for (let i = headline.length; i > 0; i--) {
+      if (!taglineAnimationRunning) break;
+      taglineText.textContent = headline.substring(0, i - 1);
+      await sleep(25);
+    }
+
+    // Small pause before next
+    await sleep(300);
+
+    // Next headline
+    index = (index + 1) % fakeHeadlines.length;
+  }
+}
 
 // ===========================================
 // UTILITY FUNCTIONS
@@ -618,7 +680,29 @@ errorModal.addEventListener('click', (e) => {
   }
 });
 
+// ===========================================
+// HOMEPAGE NAVIGATION
+// ===========================================
+
+// Start button -> go to form
+btnStart.addEventListener('click', () => {
+  taglineAnimationRunning = false;
+  showPage('form');
+});
+
+// Back button -> go to home
+btnBackHome.addEventListener('click', () => {
+  showPage('home');
+  taglineAnimationRunning = true;
+  animateTaglines();
+});
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   typingIndicator.classList.add('hidden');
+
+  // Start tagline animation on homepage
+  if (pages.home.classList.contains('active')) {
+    animateTaglines();
+  }
 });
