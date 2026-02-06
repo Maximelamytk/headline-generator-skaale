@@ -116,6 +116,70 @@ body {
   color: var(--accent);
 }
 
+/* Made by badge */
+.made-by {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.made-by:hover {
+  border-color: var(--accent);
+  color: var(--text-secondary);
+}
+
+.made-by-logo {
+  height: 16px;
+  width: auto;
+}
+
+.made-by .heart {
+  font-size: 14px;
+}
+
+/* Creator LinkedIn link */
+.creator-link {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-linkedin-creator {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid #0077b5;
+  color: #0077b5;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.btn-linkedin-creator:hover {
+  background: #0077b5;
+  color: white;
+}
+
+.btn-linkedin-creator svg {
+  transition: transform var(--transition);
+}
+
+.btn-linkedin-creator:hover svg {
+  transform: scale(1.1);
+}
+
 /* ===========================================
    PAGE 0: HOMEPAGE
    =========================================== */
