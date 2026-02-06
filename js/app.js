@@ -32,11 +32,7 @@ const linkedinIcon = document.getElementById('linkedin-icon');
 const linkedinError = document.getElementById('linkedin-error');
 const submitBtn = document.getElementById('submit-btn');
 
-// Interview elements
-const typingIndicator = document.getElementById('typing-indicator');
-const questionText = document.getElementById('question-text');
-const progressFill = document.getElementById('progress-fill');
-const progressText = document.getElementById('progress-text');
+// Interview elements (now handled in runInterviewSequence)
 
 // Result elements
 const profileBanner = document.getElementById('profile-banner');
@@ -59,34 +55,49 @@ const btnModalClose = document.getElementById('btn-modal-close');
 // INTERVIEW QUESTIONS
 // ===========================================
 
-const introMessages = [
-  "Connexion au serveur LinkedIn...",
-  "Profil de {prenom} détecté ✓",
-  "Initialisation de l'interview..."
-];
-
-const interviewQuestions = [
-  "Sur une échelle de 1 à Elon Musk, à quel point es-tu disruptif ?",
-  "Combien de fois par jour tu dis 'synergie' ?",
-  "Est-ce que tu mets des émojis 🚀 dans tes emails pro ?",
-  "Tu as déjà parlé de ton 'Why' à un inconnu dans un ascenseur ?",
-  "Ton profil mentionne 'passionné' combien de fois ?",
-  "Tu préfères 'CEO de ma vie' ou 'Entrepreneur de mon destin' ?",
-  "Quel est ton ratio posts LinkedIn / douches par semaine ?",
-  "Tu as déjà commencé une phrase par 'Je suis ravi d'annoncer...' ?",
-  "Combien de groupes LinkedIn 'Entrepreneurs' tu as rejoint ?",
-  "Tu mets 'Open to Work' même quand t'es pas open to work ?"
+// Chat dialogue - conversations between Algo and User
+const chatDialogues = [
+  {
+    algo: "Yo {prenom} ! Je suis l'Algorithme LinkedIn. Petit entretien pour calibrer ta headline...",
+    user: "Je suis prêt à scaler mon personal branding !",
+    reaction: "🔥"
+  },
+  {
+    algo: "Question 1 : Sur une échelle de 1 à Elon Musk, t'es à combien en disruption ?",
+    user: "J'innove même quand je dors. Je rêve en roadmap.",
+    reaction: "💡"
+  },
+  {
+    algo: "Intéressant... Combien de 🚀 tu mets par post LinkedIn ?",
+    user: "Jamais moins de 3. C'est la base du game.",
+    reaction: "🚀"
+  },
+  {
+    algo: "Tu parles de ton 'Why' à tes proches ?",
+    user: "Même ma mère connaît ma vision 2035.",
+    reaction: "😂"
+  },
+  {
+    algo: "CEO de ta vie ou Entrepreneur de ton destin ?",
+    user: "Les deux. Je suis multi-passionate.",
+    reaction: "🙏"
+  },
+  {
+    algo: "Dernière question : Tu mets 'Open to Work' même en CDI ?",
+    user: "L'opportunité n'attend pas. Je reste agile.",
+    reaction: "✨"
+  }
 ];
 
 const finalMessages = [
   "Calcul du taux de bullshit optimal...",
   "Détection des buzzwords en cours...",
-  "Niveau de cringe calibré à 87%...",
   "Injection de passion et de mindset...",
   "Ajout d'émojis stratégiques 🚀🙏💡...",
-  "Préparation de ta headline de rêve...",
   "C'est prêt !"
 ];
+
+const floatingEmojis = ['🚀', '💡', '🔥', '✨', '🙏', '💪', '🎯', '📈', '💼', '🌟'];
 
 // ===========================================
 // ERROR MESSAGES
@@ -312,60 +323,210 @@ async function typeWriter(element, text, speed = 30) {
 }
 
 // ===========================================
-// INTERVIEW SEQUENCE
+// INTERVIEW SEQUENCE - ULTIMATE EDITION
 // ===========================================
 
-async function runInterviewSequence(prenom) {
-  let progress = 0;
-  const startTime = Date.now();
-  const minDuration = 5000; // Minimum 5 seconds
+// Get new interview elements
+const chatMessages = document.getElementById('chat-messages');
+const typingZone = document.getElementById('typing-zone');
+const cringeFill = document.getElementById('cringe-fill');
+const cringeValue = document.getElementById('cringe-value');
+const statusText = document.getElementById('status-text');
+const userNameDisplay = document.getElementById('user-name-display');
+const userInitial = document.getElementById('user-initial');
+const floatingEmojisContainer = document.getElementById('floating-emojis');
+const emojiExplosion = document.getElementById('emoji-explosion');
+const matrixCanvas = document.getElementById('matrix-rain');
 
-  // Progress bar animation (faster)
-  const progressInterval = setInterval(() => {
-    if (progress < 95) {
-      progress += Math.random() * 4;
-      progressFill.style.width = `${Math.min(progress, 95)}%`;
+// Initialize Matrix Rain
+function initMatrixRain() {
+  if (!matrixCanvas) return;
+  const ctx = matrixCanvas.getContext('2d');
+  matrixCanvas.width = window.innerWidth;
+  matrixCanvas.height = window.innerHeight;
+
+  const chars = 'LINKEDIN🚀💡🔥✨SCALE MINDSET SYNERGY DISRUPT PASSION'.split('');
+  const fontSize = 14;
+  const columns = matrixCanvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(10, 4, 0, 0.05)';
+    ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+    ctx.fillStyle = '#f7883e';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
     }
-  }, 80);
+  }
 
-  // Phase 1: Intro (faster)
-  for (const msg of introMessages) {
-    typingIndicator.classList.remove('hidden');
-    await sleep(400);
-    typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, msg.replace('{prenom}', prenom), 20);
+  setInterval(drawMatrix, 50);
+}
+
+// Spawn floating emoji
+function spawnFloatingEmoji() {
+  if (!floatingEmojisContainer) return;
+  const emoji = document.createElement('div');
+  emoji.className = 'floating-emoji';
+  emoji.textContent = floatingEmojis[Math.floor(Math.random() * floatingEmojis.length)];
+  emoji.style.left = Math.random() * 100 + '%';
+  emoji.style.animationDuration = (3 + Math.random() * 2) + 's';
+  floatingEmojisContainer.appendChild(emoji);
+  setTimeout(() => emoji.remove(), 5000);
+}
+
+// Trigger emoji explosion
+function triggerEmojiExplosion(emoji) {
+  if (!emojiExplosion) return;
+  for (let i = 0; i < 8; i++) {
+    const em = document.createElement('div');
+    em.className = 'explosion-emoji';
+    em.textContent = emoji;
+    em.style.left = 50 + (Math.random() - 0.5) * 30 + '%';
+    em.style.top = 50 + (Math.random() - 0.5) * 30 + '%';
+    em.style.animationDelay = (i * 0.05) + 's';
+    emojiExplosion.appendChild(em);
+    setTimeout(() => em.remove(), 1000);
+  }
+}
+
+// Add chat message
+function addChatMessage(text, isUser, reaction = null) {
+  if (!chatMessages) return;
+
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${isUser ? 'user' : ''}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `message-avatar ${isUser ? 'user' : 'algo'}`;
+
+  if (isUser) {
+    avatar.textContent = userInitial?.textContent || '?';
+  } else {
+    avatar.innerHTML = '<div class="mini-algo-face"><div class="mini-eye left"></div><div class="mini-eye right"></div></div>';
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+
+  if (reaction) {
+    const reactionSpan = document.createElement('span');
+    reactionSpan.className = 'message-reaction';
+    reactionSpan.textContent = reaction;
+    bubble.appendChild(reactionSpan);
+  }
+
+  messageDiv.appendChild(avatar);
+  messageDiv.appendChild(bubble);
+  chatMessages.appendChild(messageDiv);
+
+  // Scroll to bottom
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Shake on user message
+  if (isUser) {
+    document.querySelector('.chat-window')?.classList.add('shake');
+    setTimeout(() => document.querySelector('.chat-window')?.classList.remove('shake'), 500);
+  }
+}
+
+// Show typing indicator
+function showTyping(show) {
+  if (typingZone) {
+    typingZone.classList.toggle('active', show);
+  }
+}
+
+// Update cringe meter
+function updateCringeMeter(percent) {
+  if (cringeFill) cringeFill.style.width = percent + '%';
+  if (cringeValue) cringeValue.textContent = percent + '%';
+
+  // Trigger explosion at milestones
+  if (percent === 50) triggerEmojiExplosion('🔥');
+  if (percent === 75) triggerEmojiExplosion('🚀');
+  if (percent === 100) triggerEmojiExplosion('💯');
+}
+
+// Update status
+function updateStatus(text) {
+  if (statusText) statusText.textContent = text;
+}
+
+async function runInterviewSequence(prenom) {
+  const startTime = Date.now();
+  const minDuration = 6000;
+
+  // Initialize
+  initMatrixRain();
+  if (chatMessages) chatMessages.innerHTML = '';
+  if (userNameDisplay) userNameDisplay.textContent = prenom;
+  if (userInitial) userInitial.textContent = prenom.charAt(0).toUpperCase();
+
+  // Start floating emojis
+  const emojiInterval = setInterval(spawnFloatingEmoji, 800);
+
+  // Pick 4 random dialogues
+  const shuffled = [...chatDialogues].sort(() => Math.random() - 0.5);
+  const selectedDialogues = [chatDialogues[0], ...shuffled.slice(1, 4)]; // Always include intro
+
+  let cringeLevel = 0;
+
+  for (let i = 0; i < selectedDialogues.length; i++) {
+    const dialogue = selectedDialogues[i];
+
+    // Show typing
+    showTyping(true);
+    updateStatus("L'Algorithme réfléchit...");
+    await sleep(800 + Math.random() * 400);
+
+    // Algo message
+    showTyping(false);
+    addChatMessage(dialogue.algo.replace('{prenom}', prenom), false);
+    await sleep(600);
+
+    // User typing simulation
+    updateStatus(prenom + " tape une réponse...");
+    await sleep(600 + Math.random() * 300);
+
+    // User response with reaction
+    addChatMessage(dialogue.user, true, dialogue.reaction);
+    triggerEmojiExplosion(dialogue.reaction);
+
+    // Update cringe meter
+    cringeLevel = Math.min(100, Math.round(((i + 1) / selectedDialogues.length) * 75));
+    updateCringeMeter(cringeLevel);
+
     await sleep(800);
   }
 
-  // Phase 2: Questions (pick 3 only)
-  const shuffled = [...interviewQuestions].sort(() => Math.random() - 0.5);
-  const selectedQuestions = shuffled.slice(0, 3);
+  // Final phase
+  updateStatus("Analyse finale...");
+  showTyping(true);
+  await sleep(600);
+  showTyping(false);
 
-  for (const question of selectedQuestions) {
-    typingIndicator.classList.remove('hidden');
+  addChatMessage("Parfait. J'ai tout ce qu'il me faut pour créer ta headline de rêve...", false);
+  await sleep(800);
+
+  // Final messages
+  for (let i = 0; i < finalMessages.length - 1; i++) {
+    updateStatus(finalMessages[i]);
+    cringeLevel = Math.min(100, 75 + (i + 1) * 6);
+    updateCringeMeter(cringeLevel);
     await sleep(500);
-    typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, question, 20);
-    await sleep(1500);
-
-    // Random glitch easter egg (10% chance)
-    if (Math.random() < 0.1) {
-      questionText.classList.add('glitch');
-      await sleep(200);
-      questionText.classList.remove('glitch');
-    }
   }
 
-  // Phase 3: Final messages (fewer, faster)
-  progressText.textContent = 'Finalisation...';
-
-  for (const msg of finalMessages.slice(0, 3)) {
-    typingIndicator.classList.remove('hidden');
-    await sleep(300);
-    typingIndicator.classList.add('hidden');
-    await typeWriter(questionText, msg, 15);
-    await sleep(600);
-  }
+  // Complete
+  updateCringeMeter(100);
+  updateStatus(finalMessages[finalMessages.length - 1]);
 
   // Ensure minimum duration
   const elapsed = Date.now() - startTime;
@@ -373,14 +534,9 @@ async function runInterviewSequence(prenom) {
     await sleep(minDuration - elapsed);
   }
 
-  // Complete progress
-  clearInterval(progressInterval);
-  progressFill.style.width = '100%';
-
-  // Final message
-  typingIndicator.classList.add('hidden');
-  await typeWriter(questionText, finalMessages[finalMessages.length - 1], 30);
-  await sleep(800);
+  clearInterval(emojiInterval);
+  triggerEmojiExplosion('🎉');
+  await sleep(500);
 }
 
 // ===========================================
@@ -610,8 +766,6 @@ btnBackHome.addEventListener('click', () => {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  typingIndicator.classList.add('hidden');
-
   // Start tagline animation on homepage
   if (pages.home.classList.contains('active')) {
     animateTaglines();

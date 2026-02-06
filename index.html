@@ -165,65 +165,100 @@
 
   <!-- PAGE 2: INTERVIEW / LOADING -->
   <section id="page-interview" class="page">
+    <!-- Floating emojis background -->
+    <div class="floating-emojis" id="floating-emojis"></div>
+
+    <!-- Matrix rain effect -->
+    <canvas id="matrix-rain" class="matrix-rain"></canvas>
+
     <div class="interview-container">
-      <div class="visio-window">
-        <div class="visio-header">
-          <div class="visio-controls">
-            <span class="control red"></span>
-            <span class="control yellow"></span>
-            <span class="control green"></span>
-          </div>
-          <span class="visio-title">Interview LinkedIn — En cours</span>
+      <!-- Header with live indicator -->
+      <div class="interview-header">
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          <span>ENTRETIEN EN DIRECT</span>
         </div>
+        <div class="interview-title">L'Algorithme LinkedIn t'évalue...</div>
+      </div>
 
-        <div class="visio-content">
-          <div class="recruiter-section">
-            <div class="recruiter-avatar">
-              <div class="avatar-glow"></div>
-              <div class="avatar-inner">
-                <span class="avatar-emoji">🤖</span>
+      <!-- Main chat area -->
+      <div class="chat-window">
+        <!-- Participants bar -->
+        <div class="participants-bar">
+          <div class="participant algo">
+            <div class="participant-avatar algo-avatar">
+              <div class="algo-face">
+                <div class="algo-eye left"></div>
+                <div class="algo-eye right"></div>
+                <div class="algo-mouth"></div>
               </div>
-              <span class="status-dot"></span>
+              <div class="algo-glitch"></div>
             </div>
-            <div class="recruiter-info">
-              <span class="recruiter-name">RH-3000</span>
-              <span class="recruiter-title">Recruteur Artificiel • En ligne</span>
+            <div class="participant-info">
+              <span class="participant-name">L'Algorithme</span>
+              <span class="participant-status">LinkedIn AI • Analyse ton âme</span>
             </div>
           </div>
-
-          <div class="question-section">
-            <div class="typing-indicator" id="typing-indicator">
-              <span></span><span></span><span></span>
+          <div class="vs-badge">VS</div>
+          <div class="participant user">
+            <div class="participant-info right">
+              <span class="participant-name" id="user-name-display">Toi</span>
+              <span class="participant-status">Futur influenceur • Motivé</span>
             </div>
-            <p class="question-text" id="question-text"></p>
+            <div class="participant-avatar user-avatar" id="user-avatar">
+              <span class="user-initial" id="user-initial">?</span>
+            </div>
           </div>
         </div>
 
-        <div class="visio-footer">
-          <div class="visio-buttons">
-            <button class="visio-btn muted" disabled>
-              <span class="visio-btn-icon">🎤</span>
-              <span>Mute</span>
-            </button>
-            <button class="visio-btn muted" disabled>
-              <span class="visio-btn-icon">📹</span>
-              <span>Cam</span>
-            </button>
-            <button class="visio-btn recording">
-              <span class="visio-btn-icon">🔴</span>
-              <span>REC</span>
-            </button>
+        <!-- Chat messages container -->
+        <div class="chat-messages" id="chat-messages">
+          <!-- Messages will be injected here -->
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="typing-zone" id="typing-zone">
+          <div class="typing-avatar">
+            <div class="mini-algo-face">
+              <div class="mini-eye left"></div>
+              <div class="mini-eye right"></div>
+            </div>
+          </div>
+          <div class="typing-bubble">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
           </div>
         </div>
       </div>
 
-      <div class="progress-section">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
+      <!-- Cringe-o-meter -->
+      <div class="cringe-meter">
+        <div class="meter-header">
+          <span class="meter-label">NIVEAU DE CRINGE DÉTECTÉ</span>
+          <span class="meter-value" id="cringe-value">0%</span>
         </div>
-        <span class="progress-text" id="progress-text">Analyse en cours...</span>
+        <div class="meter-bar">
+          <div class="meter-fill" id="cringe-fill"></div>
+          <div class="meter-glow" id="cringe-glow"></div>
+        </div>
+        <div class="meter-labels">
+          <span>Normal</span>
+          <span>LinkedIn</span>
+          <span>Influenceur</span>
+          <span>LÉGENDE</span>
+        </div>
+      </div>
+
+      <!-- Status text -->
+      <div class="analysis-status" id="analysis-status">
+        <span class="status-icon">⚡</span>
+        <span class="status-text" id="status-text">Connexion à l'Algorithme...</span>
       </div>
     </div>
+
+    <!-- Emoji explosion container -->
+    <div class="emoji-explosion" id="emoji-explosion"></div>
   </section>
 
   <!-- PAGE 3: RÉSULTAT -->
