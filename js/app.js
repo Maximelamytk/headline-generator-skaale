@@ -45,7 +45,6 @@ const profileName = document.getElementById('profile-name');
 const profileHeadline = document.getElementById('profile-headline');
 const profileLocation = document.getElementById('profile-location');
 const translationsContainer = document.getElementById('translations');
-const btnShareLinkedin = document.getElementById('btn-share-linkedin');
 const btnCopy = document.getElementById('btn-copy');
 const btnNext = document.getElementById('btn-next');
 
@@ -555,13 +554,6 @@ form.addEventListener('submit', async (e) => {
 btnRetry.addEventListener('click', () => {
   hideError();
   showPage('form');
-});
-
-// Share on LinkedIn
-btnShareLinkedin.addEventListener('click', () => {
-  const text = `Ma headline LinkedIn de rêve générée par @Skaale :\n\n"${state.currentHeadline}"\n\n😅 Génère la tienne sur headline-petee-skaale.netlify.app`;
-  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://headline-petee-skaale.netlify.app')}&title=${encodeURIComponent(text)}`;
-  window.open(url, '_blank', 'width=600,height=400');
 });
 
 // Copy headline
